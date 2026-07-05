@@ -7,11 +7,20 @@ export async function onRequestPost(context) {
   const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/chat/completions";
 //  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/search"
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
+
+  const systemInstruction = `You are a helpful assistant. Use the provided context to answer the user's question.
+  - Always cite your sources using the document title and URL provided in the context metadata.
+  - Format every citation as [Title](URL) immediately after the sentence where the information is used.
+  - If you cannot find the answer in the context, explicitly state that you don't have the information.
+  - Do not make up or hallucinate links.`;
+
   const payload = {
     messages: [
+      { role: "system", content: systemInstruction },
       { role: "user", content: body.message || body.content || JSON.stringify(body) }
     ]
   };
+
 
   try {
     const response = await fetch(AI_SEARCH_URL, {
