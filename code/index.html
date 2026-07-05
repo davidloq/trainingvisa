@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheets Chat - RAG</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
+        }
+        #chat { max-width: 800px; margin: 0 auto; background: white; border-radius: 10px; padding: 20px; height: 80vh; display: flex; flex-direction: column; }
+        #messages { flex: 1; overflow-y: auto; padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; }
+        .message { margin: 10px 0; padding: 10px; border-radius: 8px; }
+        .user { background: #e3f2fd; text-align: right; }
+        .ai { background: #f0f0f0; }
+        input { width: 100%; padding: 12px; font-size: 16px; }
+        button { padding: 12px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div id="chat">
+        <h1>📊 Sheets Chat</h1>
+        <div id="messages"></div>
+        <div>
+            <input type="text" id="userInput" placeholder="Ask about your sheets..." onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+<script>
+    const messagesDiv = document.getElementById('messages');
+    const input = document.getElementById('userInput');
+
+    async function sendMessage() {
+        const question = input.value.trim();
+        if (!question) return;
+
+        addMessage('user', question);
+        input.value = '';
+
+        try {
+            const response = await fetch('/api/search', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json; charset=utf-8' // Explicitly set charset
+                },
+                body: JSON.stringify({ message: question })
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            // FIX: Get the response as a blob or use text() to force UTF-8 decoding
+            const responseText = await response.text(); 
+            const data = JSON.parse(responseText);
+            
+            // CORRECTED: Extract the content string from the nested choices object
+            // This navigates: data -> choices array -> first choice -> message -> content
+            const aiText = data.choices && data.choices[0] 
+                ? data.choices[0].message.content 
+                : "No response received.";
+
+            addMessage('ai', aiText);
+        } catch (error) {
+            console.error("Error:", error);
+            addMessage('ai', 'Sorry, something went wrong.');
+        }
+    }
+
+    function addMessage(sender, text) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            
+            // Fix for "Mojibake" (broken Vietnamese characters)
+            // This converts the string back to bytes and re-interprets them as UTF-8
+            try {
+                const bytes = new TextEncoder().encode(text);
+                const correctedText = new TextDecoder("utf-8").decode(bytes);
+                div.textContent = correctedText;
+            } catch (e) {
+                div.textContent = text;
+            }
+            
+            messagesDiv.appendChild(div);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+</script>
+</body>
+</html>
+
