@@ -4,8 +4,8 @@ export async function onRequestPost(context) {
 
 
 
-  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/chat/completions";
-//  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/search"
+//  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/chat/completions";
+  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/search"
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
   const payload = {
     messages: [
