@@ -2,7 +2,7 @@ export async function onRequestPost(context) {
   const body = await context.request.json();
   const token = context.env.API_TOKEN; 
 
-  const AI_SEARCH_URL = "https://accaec7a-efe1-4e07-a964-ec7c4fe41734.search.ai.cloudflare.com/chat/completions";
+  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/chat/completions";
 
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
   const payload = {
