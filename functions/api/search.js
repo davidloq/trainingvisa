@@ -1,6 +1,6 @@
 export async function onRequestPost(context) {
   const body = await context.request.json();
-  const token = context.env.API_TOKEN; 
+  const token = context.env.AI_SEARCH_TOKEN; 
 
   const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/chat/completions";
 
