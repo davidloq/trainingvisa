@@ -8,12 +8,17 @@ export async function onRequestPost(context) {
 //  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/search"
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
 
-  const systemInstruction = `You are a helpful assistant. Use the provided context to answer the user's question.
-  - Always cite your sources using the document title and google doc URL provided in the first row of each document in the context metadata.
-  - The citation should be in a new paragraph at the end of your answer.
-  - Format every citation as [Title](URL ) immediately after the sentence where the information is used.
+  const systemInstruction =
+  ` You are a helpful assistant. Use the provided context to answer the user's question.
+  - If the context does not contain the answer, say "I don't have the information."
+  - If the context contains multiple answers, provide a summary of the most relevant information.
+  - If the context contains conflicting information, provide a balanced view of the different perspectives.
   - If you cannot find the answer in the context, explicitly state that you don't have the information.
-  - Do not make up or hallucinate links.`;
+  - Do not make up or hallucinate links.
+  - The format of your response should be clear and concise, using bullet points or numbered lists where appropriate.
+  - The format of your response must include your answer first, followed by the proof section in a new paragraph at the end.
+  - the proof section must include the relevant context from the documents, then the relevant document title and the google doc URL in the first row of that document.
+  `;
 
   const payload = {
     messages: [
