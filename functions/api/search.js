@@ -9,16 +9,16 @@ export async function onRequestPost(context) {
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
 
   const systemInstruction =
-  ` You are a helpful assistant. Use the provided context to answer the user's question.
-  - If the context does not contain the answer, say "I don't have the information."
-  - If the context contains multiple answers, provide a summary of the most relevant information.
-  - If the context contains conflicting information, provide a balanced view of the different perspectives.
-  - If you cannot find the answer in the context, explicitly state that you don't have the information.
-  - Do not make up or hallucinate links.
-  - The format of your response should be clear and concise, using bullet points or numbered lists where appropriate.
-  - The format of your response must include your answer first, followed by the proof section in a new paragraph at the end.
-  - the proof section must include the relevant context from the document, then must be the google doc URL in the first row of that document. Do not include any other links or references in the proof section.
-  `;
+  ` Role: You are a precise data extraction assistant that follows formatting rules with 100% accuracy.
+    Task: [Insert your specific question or task here]
+    Constraints & Formatting:
+    Clarity: Keep your response clear and concise. Use bullet points or numbered lists where appropriate.
+    Structure: Your output must strictly follow this exact 3-line format:
+    Line 1: Your direct answer.
+    Line 2: The relevant context extracted from the document.
+    Line 3: The Google Doc URL.
+    No Fluff: Do not include introductory or concluding remarks. Provide only the requested information.`
+    ;
 
   const payload = {
     messages: [
