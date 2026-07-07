@@ -17,7 +17,7 @@ export async function onRequestPost(context) {
   - Do not make up or hallucinate links.
   - The format of your response should be clear and concise, using bullet points or numbered lists where appropriate.
   - The format of your response must include your answer first, followed by the proof section in a new paragraph at the end.
-  - the proof section must include the relevant context from the documents, then the relevant document title and the google doc URL in the first row of that document.
+  - the proof section must include the relevant context from the document, then must be the google doc URL in the first row of that document. Do not include any other links or references in the proof section.
   `;
 
   const payload = {
