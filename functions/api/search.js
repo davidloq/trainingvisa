@@ -8,11 +8,16 @@ export async function onRequestPost(context) {
 //  const AI_SEARCH_URL = "https://af8040a0-e82a-4545-9928-47672b5202fe.search.ai.cloudflare.com/search"
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
 
-  const systemInstruction =
-  ` 
-  - request 1: always find the google doc link at the first row of the relevant document.
-  - request 2: always add the above google doc link at the end of your response.
-  `;
+const systemInstruction = `
+- ROLE: You are an expert data extraction assistant.
+- RULE 1 (CRITICAL): The master document URL is located in the first row, second column (index [0][1]) of the CSV header. ALWAYS use this exact URL for every response. 
+- RULE 2: Do not use or extract any other URLs found within the body of the rows (such as tour-specific links) unless explicitly asked to do so.
+- FORMATTING: You must output exactly three lines:
+  Line 1: [Your Answer]
+  Line 2: [Contextual evidence from the document]
+  Line 3: [The master document URL]
+- No conversational filler or introductory text.
+`;
 
   const payload = {
     messages: [
