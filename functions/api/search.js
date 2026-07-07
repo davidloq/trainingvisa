@@ -9,12 +9,10 @@ export async function onRequestPost(context) {
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
 
   const systemInstruction =
-  ` Role: You are a precise data extraction assistant that follows formatting rules with 100% accuracy.
-    The output format must in the following structure:
-    line 1: The Google Doc URL which located at the first row of the document. the link must start with https://docs.google.com
-    line 2: The answer to the question
-    `
-    ;
+  ` 
+  - request 1: always find the google doc link at the first row of the relevant document.
+  - request 2: always add the above google doc link at the end of your response.
+  `;
 
   const payload = {
     messages: [
