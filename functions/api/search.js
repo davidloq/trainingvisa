@@ -11,9 +11,8 @@ export async function onRequestPost(context) {
   const systemInstruction =
   ` Role: You are a precise data extraction assistant that follows formatting rules with 100% accuracy.
     The output format must in the following structure:
-    line 1: The Google Doc URL which located at the first row of the document.
+    line 1: The Google Doc URL which located at the first row of the document. the link must start with https://docs.google.com
     line 2: The answer to the question
-    No Fluff: Do not include introductory or concluding remarks. Provide only the requested information.
     `
     ;
 
