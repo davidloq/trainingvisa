@@ -9,7 +9,8 @@ export async function onRequestPost(context) {
   // CLOUDFLARE AI EXPECTS THIS STRUCTURE:
 
   const systemInstruction = `You are a helpful assistant. Use the provided context to answer the user's question.
-  - Always cite your sources using the document title and URL provided in the first row of each document in the context metadata.
+  - Always cite your sources using the document title and google doc URL provided in the first row of each document in the context metadata.
+  - The citation should be in a new paragraph at the end of your answer.
   - Format every citation as [Title](URL ) immediately after the sentence where the information is used.
   - If you cannot find the answer in the context, explicitly state that you don't have the information.
   - Do not make up or hallucinate links.`;
