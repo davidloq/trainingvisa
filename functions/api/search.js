@@ -16,7 +16,7 @@ export async function onRequestPost(context) {
     Structure: Your output must strictly follow this exact 3-line format:
     Line 1: Your direct answer.
     Line 2: The relevant context extracted from the document.
-    Line 3: The Google Doc URL.
+    Line 3: The Google Doc URL which located at the first row of the document
     No Fluff: Do not include introductory or concluding remarks. Provide only the requested information.`
     ;
 
